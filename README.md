@@ -87,12 +87,4 @@ nodemon index.js
 #### **DELETE /tasks/:id** - Delete a task  
 
 
-## 🚀 Deployment  
-To deploy on **Render / Railway / Vercel**, follow these steps:  
-```sh
-# Ensure environment variables are set on the hosting platform
-npm start
-```
-
----
 
