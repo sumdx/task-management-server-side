@@ -48,6 +48,12 @@ async function run() {
             res.send(result);
         }
       });
+    app.post("/tasks", async(req, res) =>{
+
+        const taskData = req.body;
+        const result = taskCollection.insertOne(taskData);
+        res.send(result);
+    })
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
