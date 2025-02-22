@@ -37,6 +37,7 @@ async function run() {
     const usersCollection = database.collection("users");
     const taskCollection = database.collection("tasks");
 
+    // add users
     app.post("/users", async (req, res) => {
         const userData = req.body;
         const query = {email: userData.email};
@@ -48,11 +49,29 @@ async function run() {
             res.send(result);
         }
       });
+
+    //   Post Task
     app.post("/tasks", async(req, res) =>{
 
         const taskData = req.body;
-        const result = taskCollection.insertOne(taskData);
+        const result = await taskCollection.insertOne(taskData);
         res.send(result);
+    })
+
+    // 
+    app.get("/tasks/:email", async(req,res)=>{
+
+        const {email} = req.params;
+        const query = {ownerEmail : email};
+        const result = await taskCollection.find(query).toArray();
+
+        const toDo = result.filter(task => task.category === "toDo");
+        const inProgress = result.filter(task => task.category === "inProgress");
+        const done = result.filter(task => task.category === "done");
+
+        const tasks = {toDo, inProgress, done};
+        console.log(tasks);
+        res.send(tasks);
     })
 
     // Send a ping to confirm a successful connection
